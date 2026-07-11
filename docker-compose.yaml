@@ -19,7 +19,7 @@ services:
     depends_on: 
       - catalogue
       - user
-      - cart
+      - cartgit 
       - shipping
   user:
    build: ./user
@@ -48,8 +48,8 @@ services:
    image: pandu15/shipping:v1
    container_name: shipping
    environment:
-     CART_ENDPOINT=cart:8080
-     DB_HOST=mysql
+     CART_ENDPOINT: cart:8080
+     DB_HOST: mysql
    depends_on:
      - mysql
      - cart
