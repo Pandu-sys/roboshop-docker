@@ -52,6 +52,7 @@ services:
      DB_HOST=mysql
    depends_on:
      - mysql
+     - cart
   redis:
    image: redis:7
    container_name: redis # docker run -d --name redis --network roboshop redis:7
