@@ -19,7 +19,7 @@ services:
     depends_on: 
       - catalogue
       - user
-      - cartgit 
+      - cart 
       - shipping
   user:
    build: ./user
