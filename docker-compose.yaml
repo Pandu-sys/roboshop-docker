@@ -85,7 +85,7 @@ services:
     container_name: rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: roboshop
-      RABBITMQ_DEFAULT_PASSOWRD: roboshop123
+      RABBITMQ_DEFAULT_PASS: roboshop123
 networks:
   default: #this means all the services in this file will get the default network. 
     name: roboshop
