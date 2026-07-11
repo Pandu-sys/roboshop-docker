@@ -1,0 +1,25 @@
+name: roboshop
+services:
+  mongodb: 
+    build: ./mongodb
+    image: pandu15/mongodb:v1 #
+    container_name: mongodb
+  catalogue: 
+    build: ./catalogue
+    image: pandu15/catalogue:v1
+    container_name: catalogue
+    depends_on:
+      - mongodb
+  frontend:
+    build: ./frontend
+    image: pandu15/frontend:v1
+    container_name: frontend
+    ports:
+      - 80:80
+    depends_on: 
+      - catalogue
+networks:
+  default: #this means all the services in this file will get the default network. 
+    name: roboshop
+    driver: bridge
+    external: false # if its true it should be created manullay, if false docker creates the network. 
