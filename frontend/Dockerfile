@@ -1,18 +1,24 @@
 FROM nginx:1.24.0-alpine3.17-slim
-
-RUN rm -rf /usr/share/nginx/html/* && \
-    rm -rf /etc/nginx/nginx.conf && \
-    rm -rf /etc/nginx/conf.d/default.conf && \
-    mkdir -p /var/cache/nginx /var/run /var/log/nginx && \
-    chown -R nginx:nginx \
-        /var/cache/nginx \
-        /var/run \
-        /var/log/nginx \
-        /usr/share/nginx/html
-
-COPY --chown=nginx:nginx static /usr/share/nginx/html/
-COPY --chown=nginx:nginx nginx.conf /etc/nginx/nginx.conf
-
+RUN apt-get update && apt-get upgrade -y \
+    && apt install nano curl -y \ 
+    && rm -rf /var/lib/apt/lists/*
+RUN mkdir -p /var/cache/nginx/client_temp && \
+    mkdir -p /var/cache/nginx/proxy_temp && \
+    mkdir -p /var/cache/nginx/fastcgi_temp && \
+    mkdir -p /var/cache/nginx/uwsgi_temp && \
+    mkdir -p /var/cache/nginx/scgi_temp && \
+    chown -R nginx:nginx /var/cache/nginx && \
+    chown -R nginx:nginx /etc/nginx/ && \
+    chmod -R 755 /etc/nginx/ && \
+    chown -R nginx:nginx /var/log/nginx
+RUN mkdir -p /etc/nginx/ssl/ && \
+    chown -R nginx:nginx /etc/nginx/ssl/ && \
+    chmod -R 755 /etc/nginx/ssl/
+RUN touch /var/run/nginx.pid && \
+    chown -R nginx:nginx /var/run/nginx.pid /run/nginx.pid
+COPY  static /usr/share/nginx/html/
+COPY nginx.conf /etc/nginx/nginx.conf
+CMD ["nginx", "-g", "daemon off;"]
 USER nginx
 
 # FROM nginx:1.24.0-alpine3.17-slim
