@@ -1,7 +1,7 @@
 FROM nginx:1.24.0-alpine3.17-slim
-RUN apk update && \
-    apk upgrade && \
-    apk add --no-cache nano curl
+RUN rm -rf /usr/share/nginx/html/ && \
+    rm -rf /etc/nginx/nginx.conf && \
+    rm -rf /etc/nginx/conf.d/default.conf
 RUN mkdir -p /var/cache/nginx/client_temp && \
     mkdir -p /var/cache/nginx/proxy_temp && \
     mkdir -p /var/cache/nginx/fastcgi_temp && \
@@ -11,15 +11,17 @@ RUN mkdir -p /var/cache/nginx/client_temp && \
     chown -R nginx:nginx /etc/nginx/ && \
     chmod -R 755 /etc/nginx/ && \
     chown -R nginx:nginx /var/log/nginx
+
 RUN mkdir -p /etc/nginx/ssl/ && \
     chown -R nginx:nginx /etc/nginx/ssl/ && \
     chmod -R 755 /etc/nginx/ssl/
+
 RUN touch /var/run/nginx.pid && \
     chown -R nginx:nginx /var/run/nginx.pid /run/nginx.pid
-COPY  static /usr/share/nginx/html/
+COPY static/ /usr/share/nginx/html/
 COPY nginx.conf /etc/nginx/nginx.conf
-CMD ["nginx", "-g", "daemon off;"]
 USER nginx
+CMD ["nginx", "-g", "daemon off;"]
 
 # FROM nginx:1.24.0-alpine3.17-slim
 # RUN rm -rf /usr/share/nginx/html/* && \
