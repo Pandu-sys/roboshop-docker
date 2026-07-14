@@ -1,7 +1,7 @@
 FROM python:3.9.25-alpine3.22 AS builder
 WORKDIR /app
 COPY requirements.txt .
-RUN pip3 install --prefix/install -r requirements.txt
+RUN pip3 install --prefix /install -r requirements.txt
 
 FROM python:3.9.25-alpine3.22
 WORKDIR /app
