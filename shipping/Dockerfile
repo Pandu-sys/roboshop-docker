@@ -6,7 +6,7 @@ RUN mvn clean package && \
     mv target/shipping-1.0.jar shipping.jar 
 
 
-FROM eclipse-temurin:17-jre-alpine
+FROM --platform=linux/amd64 eclipse-temurin:17-jre-alpine
 EXPOSE 8080
 WORKDIR /app
 RUN addgroup -S roboshop && adduser -S -G roboshop roboshop && \
